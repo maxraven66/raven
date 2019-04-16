@@ -1,0 +1,36 @@
+<!DOCTYPE HTML>
+<html lang="zh-CN">
+
+<head>
+	<meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=8" />
+    <meta name="renderer" content="webkit|ie-comp|ie-stand">
+	<title>VUE练习</title>
+	<meta name="keywords" content="VUE练习" />
+	<script src='js/vue.js'></script>
+</head>
+
+<body>
+
+<div id="app">
+<!--   <span v-bind:title="message">
+    {{ message }}
+  </span> -->
+  <ol>
+  		<li v-for = 'raven in message '><a href="">{{raven}}</a></li>
+  </ul>
+
+</div>
+
+</body>
+<script>
+
+	//获取后台数据(此处为模拟后台获取到的数据)
+	var app = new Vue({
+	  el: '#app',
+	  data: {
+	    message: ['电子','真人','体育','彩票','棋牌']
+	  }
+	})
+</script>
+</html>

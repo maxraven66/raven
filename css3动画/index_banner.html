@@ -1,0 +1,117 @@
+<!DOCTYPE html> 
+<html lang="en"> 
+<head> 
+	<meta charset="utf-8"> 
+	<meta name="viewport" content="width=device-width"> 
+	<title>3D视觉banner</title>
+	<link rel="shortcut icon" href="http://static.runoob.com/images/favicon.ico" mce_href="http://static.runoob.com/images/favicon.ico" type="image/x-icon">
+	<style type="text/css">
+		*{margin: 0;padding: 0;}
+		.index_banner{width: 100%;height: auto;overflow: hidden;background: #666;}
+		.index_banner .indicators,.index_banner .indicators #docList_ant,.index_banner .indicators #docList_ant a{width: 100%;height: 100%;position: relative;}
+		.index_banner .indicators #docList_ant a{display: flex;}
+		.index_banner .indicators #docList_ant a .animation{flex: 1;height: 100%;display: block;float: left;position: relative;transform-style: preserve-3d;transform: rotateX(0deg) rotateY(0deg);}
+		.index_banner .indicators #docList_ant a .animation.anact{animation: fastspin 1s cubic-bezier(1, 1, 1, 1) forwards;}
+	    @keyframes fastspin{
+		  0%{transform:rotateX(0deg) rotateY(0deg);}
+		  25%{transform:rotateX(-5deg) rotateY(-45deg) scale(.9);}
+		  50%{transform:rotateX(0deg) rotateY(-90deg) scale(.8);}
+		  75%{transform:rotateX(-5deg) rotateY(-135deg) scale(.9);}
+		  100%{transform:rotateX(0deg) rotateY(-180deg);}
+		}
+		.index_banner .indicators #docList_ant a .animation:nth-child(1){animation-delay: 000ms;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(2){animation-delay: 200ms;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(3){animation-delay: 400ms;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(4){animation-delay: 600ms;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(5){animation-delay: 800ms;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(6){animation-delay: 1000ms;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(7){animation-delay: 1200ms;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(8){animation-delay: 1400ms;}
+		.index_banner .indicators #docList_ant a .animation span{display: block;position: absolute;background-color: #999;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(1) > span{background-position-x: 0;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(2) > span{background-position-x: -100%;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(3) > span{background-position-x: -85.7%;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(4) > span{background-position-x: -71.5%;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(5) > span{background-position-x: -57.2%;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(6) > span{background-position-x: -43%;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(7) > span{background-position-x: -28.5%;}
+		.index_banner .indicators #docList_ant a .animation:nth-child(8) > span{background-position-x: -14.3%;}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(1),.index_banner .indicators #docList_ant a .animation span:nth-child(6){width: 100%;height: 100%;background-size: cover;}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(2),.index_banner .indicators #docList_ant a .animation span:nth-child(3){width: 100%;height: 10px;}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(4),.index_banner .indicators #docList_ant a .animation span:nth-child(5){width: 10px;height: 100%;}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(2){transform: rotateX(90deg) translateY(-5px) translateZ(5px);}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(3){transform: rotateX(-90deg) translateY(5px);bottom: 0;}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(4){transform: rotateY(90deg) translateX(5px) translateZ(-5px);}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(5){transform: rotateY(90deg) translateX(5px) translateZ(10px);right: 0;}
+		.index_banner .indicators #docList_ant a .animation span:nth-child(6){transform: rotateY(180deg) translateZ(10px);}
+	</style>
+</head> 
+<body> 
+<main>
+	<section class="index_banner">
+		<div class="indicators">
+			<div id="docList_img"></div>
+			<div id="docList_ant">
+				<a href="javascript:"></a>
+			</div>
+		</div>
+	</section>
+</main>
+<script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script> 
+<script type="text/javascript" src="js/data.js"></script>
+<script type="text/javascript">
+	$(function(){
+		//自适应屏幕高宽 容器宽度=100% 高度=页面宽度/图片宽高比 图片宽高比=（图片宽度/高度）
+		$('.index_banner').css('height',$(document).width()/(1920/600));
+		//获取后台数据循环列表加载自容器内
+		var html_a = '';
+		var docList_a = data_a.doctorList_a;
+		for(var i=0,dLen=docList_a.length;i<dLen;i++){
+			html_a+= '<a href="'+ docList_a[i].doctorHref +'"><img src="'+ docList_a[i].doctorImg +'" alt="'+ docList_a[i].doctorId +'" /></a>';
+		};
+		$('#docList_img').append(html_a).hide().children('a:eq(0)').addClass('active');
+		//绘制组件标签
+		var timer1 = setInterval(function(){$('#docList_ant a').append('<div class="animation"></div>');},10);
+		setTimeout(function(){window.clearTimeout(timer1); },80);
+		setTimeout(function(){
+			var timer2 = setInterval(function(){$('#docList_ant a div').append('<span></span>');},10);
+			setTimeout(function(){window.clearTimeout(timer2); },60);
+		},80);
+		//
+		function once(){
+			function elseifse(){
+				var img_01 = $('.active').children().attr('src');
+				var img_02 = $('.active').next().children().attr('src');
+				$('.active').removeClass('active').next().addClass('active');
+				$('.animation').addClass('anact');
+				setTimeout(function(){
+					$('.animation').removeClass('anact');
+					$('.animation').find('span:eq(0)').css('background-image','url('+img_01+')');
+					$('.animation').find('span:eq(5)').css('background-image','url('+img_02+')');
+					$('.animation').parent().attr('href',$('.active').attr('href'));
+				},2400);
+			};
+			if ($('.active').is(':last-child')){
+				var img_01 = $('.active').children().attr('src');
+				var img_02 = $('.active').parent().children('a:eq(0)').children().attr('src');
+				$('.active').removeClass('active').parent().children('a:eq(0)').addClass('active');
+				$('.animation').addClass('anact');
+				setTimeout(function(){
+					$('.animation').removeClass('anact');
+					$('.animation').find('span:eq(0)').css('background-image','url('+img_01+')');
+					$('.animation').find('span:eq(5)').css('background-image','url('+img_02+')');
+					$('.animation').parent().attr('href',$('.active').attr('href'));
+				},2400);
+			}else(elseifse());
+		}
+		var timera = setInterval(function(){once();},10);
+		setTimeout(function(){
+			window.clearTimeout(timera);
+			setInterval(function(){
+				once();
+			},6000);
+		},10);
+	});
+</script>
+</body> 
+</html>
